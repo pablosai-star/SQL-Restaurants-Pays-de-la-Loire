@@ -1,0 +1,51 @@
+import pandas as pd
+import os
+
+# Charger les contacts existants si le fichier existe
+if os.path.exists(r"D:\DATA_FULL_STACK\Data\contacts.csv"):
+    df = pd.read_csv(r"D:\DATA_FULL_STACK\Data\contacts.csv")
+    contacts = df.to_dict("records")  # convertit le DataFrame en liste de dicts
+else:
+    contacts = []
+
+while True:
+    print("1 → Ajouter un contact")
+    print("2 → Rechercher un contact")
+    print("3 → Afficher tous les contacts")
+    print("4 → Supprimer un contact")
+    print("5 → Sauvegarder en CSV")
+    print("6 → Quitter")
+
+    try:
+        choix = int(input("Ton choix : "))
+    except ValueError:
+        print("Saisis un chiffre entre 1 et 6 !")
+        continue  # repart au début de la boucle
+
+    if choix == 1:
+        print("Tu as choisi : Ajouter un contact")
+        #{"nom": "Giovanni", "telephone": "0612345678", "email": "giovanni@gmail.com"}
+        prenom=input("Quel est ton prenom?")
+        telephone=input("Quel est ton numero?")
+        adr_mail=input("Quelle est ton adresse mail?")
+        contact={"prenom":prenom, "telephone": telephone, "email":adr_mail}
+        contacts.append(contact)
+    elif choix == 2:
+        print("Tu as choisi : Rechercher un contact")
+    elif choix == 3:
+        print("Tu as choisi : Afficher tous les contacts")
+        #Prénom : Giovanni | Téléphone : 0612345678 | Email : giovanni@gmail.com
+    
+        for contact in contacts:
+            print(f"Prénom : {contact['prenom']} | Téléphone : {contact['telephone']} | Email : {contact['email']}")    
+
+    elif choix == 4:
+        print("Tu as choisi : Supprimer un contact")
+    elif choix == 5:
+        print("Tu as choisi : Sauvegarder en CSV")
+        df = pd.DataFrame(contacts)
+        df.to_csv(r"D:\DATA_FULL_STACK\Data\contacts.csv", index=False)
+        print("Contacts sauvegardées !")
+    elif choix == 6:
+        print("Au revoir !")
+        break
