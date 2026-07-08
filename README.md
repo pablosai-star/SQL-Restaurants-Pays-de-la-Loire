@@ -1,52 +1,54 @@
-# 🍽️ Analyse SQL — Restaurants Pays de la Loire
+# 🏠 California Housing — Prédiction des Prix Immobiliers
 
-Exploration de l'offre touristique restauration en Pays de la Loire
-à partir des données publiques de Nantes Métropole.
+Comparaison de modèles de Machine Learning pour prédire les prix
+immobiliers en Californie à partir du dataset sklearn.
 
 ## 🎯 Objectif
 
-Analyser la répartition et les caractéristiques des restaurants
-touristiques en Pays de la Loire via des requêtes SQL avancées.
+Construire et comparer plusieurs modèles de régression pour prédire
+le prix médian des logements par district en Californie, et identifier
+le modèle le plus performant via GridSearchCV.
 
 ## 📦 Dataset
 
-- **Source** : [Nantes Métropole Open Data](https://data.nantesmetropole.fr)
-- **Volume** : 3 359 restaurants, 49 variables
-- **Couverture** : Loire-Atlantique, Maine-et-Loire, Sarthe, Mayenne
+- **Source** : Scikit-learn (fetch_california_housing)
+- **Volume** : 20 640 districts, 8 variables
+- **Cible** : Prix médian des logements (en centaines de milliers $)
 
 ## 🛠️ Stack
 
-- **Python** : Pandas, SQLite3
-- **SQL** : SQLite (window functions, CTEs, agrégations)
+- **Python** : Pandas, Scikit-learn, XGBoost
+- **Machine Learning** : Régression Linéaire, Random Forest,
+  XGBoost, KNN
+- **Optimisation** : GridSearchCV + Cross-validation 5 folds
 - **Environnement** : Jupyter Notebook, VS Code
 
 ## 📁 Structure du repo
 
-├── offre_touristique_paysdelaloire.ipynb  # Notebook principal
-├── offre-touristique-restaurants.csv      # Dataset
+├── ML_california_housing1.ipynb  # Notebook principal
+├── model_california.pkl          # Modèle XGBoost sauvegardé
 └── README.md
 
-## 📊 Requêtes SQL couvertes
+## 🤖 Comparaison des Modèles (Cross-validation 5 folds)
 
-- `COUNT + GROUP BY` — répartition des restaurants par département
-- `TOP 10 + WHERE + LIMIT` — communes les plus actives
-- `RANK() OVER PARTITION BY` — rang des communes par département
-- `CTE + RANK()` — top 3 catégories par département
-- `NTILE()` — classement des communes en quartiles
-- `LAG()` — écart entre communes consécutives
+| Modèle | R² moyen | Écart-type |
+|--------|----------|------------|
+| Régression Linéaire | 0.61 | ± 0.05 |
+| Random Forest | 0.65 | ± 0.09 |
+| XGBoost | 0.65 | ± 0.04 |
+| KNN | 0.59 | ± 0.06 |
 
-## 📈 Visualisations
+## 🏆 Modèle Final — XGBoost optimisé
 
-- **Barplot** : Top 10 communes par nombre de restaurants (coloré par département)
-- **Carte interactive** : Répartition géographique des restaurants
-  en Pays de la Loire (Plotly)
-  
+- **Meilleurs paramètres** : learning_rate=0.1, max_depth=3,
+  n_estimators=300
+- **Meilleur R² CV** : 0.69
+- **RMSE final** : 0.49
+- **R² final** : 0.82
+
 ## 🔍 Key Insights
 
-- **Loire-Atlantique** concentre 46% des restaurants (1 547 sur 3 359)
-- **Saint-Nazaire devant Nantes** en Loire-Atlantique — effet tourisme
-  côtier sur le dataset
-- **Cuisine traditionnelle** domine dans les 4 départements
-- **Maine-et-Loire** se distingue avec la gastronomie en #2 — effet
-  vignoble Anjou
-- **Mayenne** profil plus rural — bistrot/bar à vin en #2
+- XGBoost légèrement meilleur que Random Forest avec un écart-type
+  plus faible (0.04 vs 0.09) — plus stable en production
+- GridSearchCV améliore le R² de 0.65 → 0.82 après optimisation
+- KNN moins adapté aux données géographiques de ce dataset
