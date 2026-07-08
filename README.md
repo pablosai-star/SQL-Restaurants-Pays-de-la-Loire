@@ -35,6 +35,12 @@ touristiques en Pays de la Loire via des requêtes SQL avancées.
 - `NTILE()` — classement des communes en quartiles
 - `LAG()` — écart entre communes consécutives
 
+## 📈 Visualisations
+
+- **Barplot** : Top 10 communes par nombre de restaurants (coloré par département)
+- **Carte interactive** : Répartition géographique des restaurants
+  en Pays de la Loire (Plotly)
+  
 ## 🔍 Key Insights
 
 - **Loire-Atlantique** concentre 46% des restaurants (1 547 sur 3 359)
